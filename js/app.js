@@ -1,5 +1,3 @@
-
-
 //Model
 //create cronstructor for model
 var Model = function() {
@@ -19,26 +17,26 @@ Model.prototype.setText = function(value) {
   };
 //view
  //this contructor valled view will take on two parameters elementSlector and initialValue
-var View = function(elementSelector, initialValue) {
+var View = function(elementId, initialValue) {
     //use jquery to select the input
-    this.element = $(elementSelector);
+    this.element = document.getElementById(elementId);
    //set value method
     this.setValue(initialValue || '');
 
     this.onChange = null;
  //sets the <input> elemnts value using the setValue method.
-    this.element.on('input', this.onInput.bind(this));
+    this.element.addEventListener('input', this.onInput.bind(this));
 };
  //when user types something the method onInput will be callback to onChange
 View.prototype.onInput = function() {
-    var value = this.element.val();
+    var value = event.target.value;
     if (this.onChange) {
         this.onChange(value);
     }
 };
 //get the value in text formate
 View.prototype.setValue = function(text) {
-    this.element.val(text);
+    this.element.value = text;
 };
 //controller
 //user enters something in the view, the models text is then changed, and then whe the models text
