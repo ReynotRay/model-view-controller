@@ -1,3 +1,5 @@
+
+
 //Model
 //create cronstructor for model
 var Model = function() {
@@ -15,29 +17,36 @@ Model.prototype.setText = function(value) {
         this.onChange(this.text);
     }
   };
+
+
+
 //view
  //this contructor valled view will take on two parameters elementSlector and initialValue
-var View = function(elementId, initialValue) {
+var View = function(elementSelector, initialValue) {
     //use jquery to select the input
-    this.element = document.getElementById(elementId);
+    this.element = $(elementSelector);
    //set value method
     this.setValue(initialValue || '');
 
     this.onChange = null;
- //sets the <input> elemnts value using the setValue method.
-    this.element.addEventListener('input', this.onInput.bind(this));
+ //sets the <input> elemnts value using the setValue method and will bind this input
+    this.element.on('input', this.onInput.bind(this));
 };
  //when user types something the method onInput will be callback to onChange
 View.prototype.onInput = function() {
-    var value = event.target.value;
+    var value = this.element.val();
     if (this.onChange) {
         this.onChange(value);
     }
 };
-//get the value in text formate
+//get the value in text format
 View.prototype.setValue = function(text) {
-    this.element.value = text;
+    this.element.val(text);
 };
+
+
+
+
 //controller
 //user enters something in the view, the models text is then changed, and then whe the models text
 //is changed the view has its value updated. 
@@ -51,3 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var view = new View('uppercase');
     var controller = new Controller(model, view);
 });
+
+
+//questions I hear react is used for view only can you elaborate
